@@ -16,7 +16,10 @@ interface TaskItemProps {
 
 export default Vue.extend({
   name: "TaskItem",
-  props: {} as RecordPropsDefinition<TaskItemProps>
+  props: {
+    clickHandler: Function,
+    task: {}
+  } as RecordPropsDefinition<TaskItemProps>
 });
 </script>
 

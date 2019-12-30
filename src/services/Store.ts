@@ -1,4 +1,4 @@
-import Vuex from "vuex"
+import Vuex, { Store } from "vuex"
 import Vue from "vue"
 
 Vue.use(Vuex)
@@ -9,9 +9,9 @@ export interface Task {
   completed?: boolean;
 }
 
-export interface StoreProps {
-  lastId: number,
-  tasks: Task[]
+export interface State {
+  lastId: number;
+  tasks: Task[];
 }
 
 const store = new Vuex.Store({
@@ -21,20 +21,19 @@ const store = new Vuex.Store({
       { id: 1, name: "eggss", completed: false },
       { id: 2, name: "lettuce", completed: true }
     ]
-  } as StoreProps,
+  } as State,
   mutations: {
     incrementId (state) {
       state.lastId++
     },
-    markComplete ({tasks}, task: Task) {
-      const updatedTask: Task = { ...task, completed: true };
-      tasks = [...tasks.filter(t => t.id !== task.id), updatedTask]
+    markComplete (store, task: Task) {
+      store.tasks = [...store.tasks.filter(t => t.id !== task.id), { ...task, completed: true }]
     },
-    markIncomplete ({tasks}, task) {
-      tasks = [...tasks.filter(t => t.id !== task.id), { ...task, completed: false }]
+    markIncomplete (store, task: Task) {
+      store.tasks = [...store.tasks.filter(t => t.id !== task.id), { ...task, completed: false }]
     },
-    clearCompleted ({tasks}) {
-      tasks = store.getters.incompleteTasks;
+    clearCompleted (store) {
+      store.tasks = store.tasks.filter(task => !task.completed);
     },
     addTask ({tasks, lastId}, task) {
       tasks.push({ ...task, id: lastId, completed: false });

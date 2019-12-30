@@ -16,7 +16,7 @@
     </div>
     <div v-if="completeTasksPresent" class="taskList">
       <h3>Completed tasks</h3>
-      <a href="" @click="clearComplete">
+      <a href="" @click.prevent="clearComplete">
         Clear completed tasks
       </a>
       <TaskItem
@@ -64,6 +64,7 @@ export default {
       this.$store.commit("markIncomplete", task);
     },
     clearComplete: function() {
+      console.log("clearing complete");
       this.$store.commit("clearCompleted");
     }
   }

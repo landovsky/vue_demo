@@ -7,7 +7,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { RecordPropsDefinition } from "vue/types/options";
-import { Task } from "@/services/State";
+import { Task } from "@/services/Store";
 
 interface TaskItemProps {
   clickHandler: (task: Task) => void;
